@@ -1,7 +1,9 @@
-FROM php:8.0-apache
+#версия с zend thread safety для работы parallels
+FROM mohsenmottaghi/php-fpm-zts:latest
+RUN pecl install parallel
 WORKDIR /var/www/html
 
-#TODO: настроить копирование файлов при билде - сейчас не работает
-#sCOPY ./app/index.php /var/www/html/index.php
-EXPOSE 80
+COPY ./app /var/www/html
+COPY ../.docker/php-ext-parallel.ini /usr/local/etc/php/conf.d/php-ext-parallel.ini
 #todo composer
+#todo проброс портов
