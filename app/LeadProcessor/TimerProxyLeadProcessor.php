@@ -9,6 +9,8 @@ class TimerProxyLeadProcessor implements LeadProcessorInterface
      */
     private $originalObject;
 
+    const TARGET_LEADS_DEFAULT = 10000;
+
     private $startTime;
 
     public function __construct(array $config)
@@ -20,6 +22,8 @@ class TimerProxyLeadProcessor implements LeadProcessorInterface
             throw new Exception('No original object was set');
         }
 
+        $this->originalObject = $config['target_count'] ?? self::TARGET_LEADS_DEFAULT;
+
         $this->originalObject = $config['original_object'];
     }
 
@@ -27,6 +31,9 @@ class TimerProxyLeadProcessor implements LeadProcessorInterface
 
     public function processOne(Lead $lead): void
     {
+        $startOneTime = microtime(true);
         $this->originalObject->processOne($lead);
+        $endOneTime = microtime(true);
+        $secToProcess = $endOneTime-$startOneTime;
     }
 }
