@@ -1,0 +1,9 @@
+{
+    "name": "pgolomysov/lead_processing",
+    "type": "project",
+    "license": "public",
+    "minimum-stability": "dev",
+    "require": {
+        "vladimir163/lead-generator": "*"
+    }
+}
