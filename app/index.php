@@ -11,12 +11,14 @@ require_once('LeadProcessor/TimerProxyLeadProcessor.php');
 require_once('Logger/LoggerInterface.php');
 require_once('Logger/FileLogger.php');
 
-$asyncLeadProcessor = new AsyncLeadProcessor(['max_queue_count' => 30, 'sleep' => 0]);
+$asyncLeadProcessor = new AsyncLeadProcessor(['max_thread_count' => 60, 'sleep' => 2]);
 $asyncLeadProcessor->setLogger(new FileLogger());
 
 $timerProxyLeadProcessor = new TimerProxyLeadProcessor(['original_object' => $asyncLeadProcessor]);
 
+$startOneTime = microtime(true);
+
 $generator = new Generator();
-$generator->generateLeads(5, function (Lead $lead) use ($timerProxyLeadProcessor) {
+$generator->generateLeads(10000, function (Lead $lead) use ($timerProxyLeadProcessor) {
     $timerProxyLeadProcessor->processOne($lead);
 });

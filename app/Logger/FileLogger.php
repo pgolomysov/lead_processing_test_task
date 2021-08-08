@@ -4,6 +4,8 @@ class FileLogger implements LoggerInterface
 {
     public function log(string $message): void
     {
-        echo $message . "\n";
+        $file = fopen('logs/log.txt', 'a+');
+        fwrite($file, $message . "\n");
+        fclose($file);
     }
 }

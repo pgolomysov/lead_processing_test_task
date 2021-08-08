@@ -29,8 +29,11 @@ lead_id | lead_category | current_datetime</li>
 <li>Залить код в публичный Git-репозиторий</li>
 </ul>
 
+<h1>От автора</h1>
+Реализовано на библиотеке Parallel<br />
+Для решения такой задачи на практике я бы использовал сервис очередей
 
 <h1>Инструкции по сборке</h1>
 <code>
-    docker build
+    docker-compose build
 </code>
