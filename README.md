@@ -34,11 +34,17 @@ lead_id | lead_category | current_datetime</li>
 Для решения такой задачи на практике я бы использовал сервис очередей
 
 <h1>Инструкции по сборке</h1>
-<code>
-    docker build Dockerfile
-</code>
-<code>
-composer install
-</code>
+
+```
+    docker build -f Dockerfile .
+    cd app && composer install
+```
+
+```
+docker exec -ti lead_processing_test_task_webapp_1  /bin/bash
+php index.php
+```
+Логи смотреть в logs/log.txt
+
 <br />
 Далее заходим в контейнер и запускаем index.php

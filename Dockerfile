@@ -9,4 +9,6 @@ WORKDIR /var/www/html
 
 ADD ../app /var/www/html
 ADD ../.docker/php-ext-parallel.ini /usr/local/etc/php/conf.d/php-ext-parallel.ini
+
+WORKDIR /var/www/html
 RUN composer install
