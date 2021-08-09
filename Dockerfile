@@ -12,4 +12,4 @@ ADD ../.docker/php-ext-parallel.ini /usr/local/etc/php/conf.d/php-ext-parallel.i
 
 WORKDIR /var/www/html
 RUN composer install
-RUN chmod 777 /var/www/html/logs
+RUN chmod 777 /var/www/html/logs/*
