@@ -46,6 +46,3 @@ docker exec -ti lead_processing_test_task_webapp_1 /bin/bash
 php index.php
 ```
 Логи смотреть в logs/log.txt
-
-<br />
-Далее заходим в контейнер и запускаем index.php
