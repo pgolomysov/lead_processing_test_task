@@ -7,11 +7,8 @@ use parallel\Runtime;
 class AsyncLeadProcessor implements LeadProcessorInterface
 {
     private int $maxThreadsCount;
-
-    private int $threadsCount;
-
+    private int $threadsCount = 0;
     private array $threads;
-
     private int $sleep;
 
     private LoggerInterface $logger;
@@ -32,34 +29,41 @@ class AsyncLeadProcessor implements LeadProcessorInterface
 
     public function processOne(Lead $lead): void
     {
-        $callable = function(array $lead, int $sleep) {
+        while (true) {
+            if ($this->threadsCount < $this->maxThreadsCount) {
+                $this->runOne($lead);
+                break;
+            } else {
+                $this->logger->log('Тредов слишком много, чищу. Сейчас их ' . $this->threadsCount);
+                $this->cleanDoneThreads();
+                $this->logger->log('Теперь тредов: '. $this->threadsCount);
+            }
+            usleep(300000);
+        }
+    }
+
+    private function runOne(Lead $lead): void
+    {
+        $runtime = new Runtime();
+        $future = $runtime->run($this->getCallable(), [(array)$lead, $this->sleep]);
+        $this->threads[] = $future;
+        $this->threadsCount++;
+
+        $this->logger->log('Сейчас тредов: '. $this->threadsCount);
+    }
+
+    private function getCallable(): callable
+    {
+        return function(array $lead, int $sleep) {
             sleep($sleep);
             $message = sprintf("%s | %s | %s \n", $lead['id'], $lead['categoryName'], date('Y-m-d H:i:s'));
             $file = fopen('logs/log.txt', 'a+');
             fwrite($file, $message);
             fclose($file);
         };
-
-        while (true) {
-            if ($this->threadsCount < $this->maxThreadsCount) {
-                $runtime = new Runtime();
-
-                $future = $runtime->run($callable, [(array)$lead, $this->sleep]);
-                $this->threadsCount++;
-                echo '[debug]' . ' Сейчас тредов: '. $this->threadsCount . "\n";
-
-                $this->threads[] = $future;
-                break;
-            } else {
-                echo '[debug]' . ' Тредов слишком много, чищу. Сейчас их ' . $this->threadsCount . "\n";
-                $this->cleanThreads();
-                echo '[debug]' . ' Теперь тредов: '. $this->threadsCount . "\n";
-            }
-            usleep(300000);
-        }
     }
 
-    private function cleanThreads()
+    private function cleanDoneThreads(): void
     {
         foreach ($this->threads as $key => $future) {
             if ($future->done()) {
