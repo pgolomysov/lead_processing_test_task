@@ -41,6 +41,7 @@ lead_id | lead_category | current_datetime</li>
 ```
 
 ```
+docker-compose up -d
 docker exec -ti lead_processing_test_task_webapp_1  /bin/bash
 php index.php
 ```
