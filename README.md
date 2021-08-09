@@ -35,5 +35,8 @@ lead_id | lead_category | current_datetime</li>
 
 <h1>Инструкции по сборке</h1>
 <code>
-    docker-compose build
+    docker-compose build<br/>
+    composer install
 </code>
+<br />
+Далее заходим в контейнер и запускаем index.php
