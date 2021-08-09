@@ -6,12 +6,12 @@ use parallel\Runtime;
 
 class AsyncLeadProcessor implements LeadProcessorInterface
 {
+    private LoggerInterface $logger;
+
     private int $maxThreadsCount;
     private int $threadsCount = 0;
     private array $threads;
     private int $sleep;
-
-    private LoggerInterface $logger;
 
     const MAX_THREAD_COUNT_DEFAULT = 10;
     const SLEEP_DEFAULT = 2;
