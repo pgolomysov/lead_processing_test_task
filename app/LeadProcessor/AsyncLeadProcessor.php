@@ -36,7 +36,7 @@ class AsyncLeadProcessor implements LeadProcessorInterface
             } else {
                 $this->logger->log('Тредов слишком много, чищу. Сейчас их ' . $this->threadsCount);
                 $this->cleanDoneThreads();
-                $this->logger->log('Теперь тредов: '. $this->threadsCount);
+                $this->logger->log('Теперь тредов: ' . $this->threadsCount);
             }
             usleep(300000);
         }
@@ -49,7 +49,7 @@ class AsyncLeadProcessor implements LeadProcessorInterface
         $this->threads[] = $future;
         $this->threadsCount++;
 
-        $this->logger->log('Сейчас тредов: '. $this->threadsCount);
+        $this->logger->log('Сейчас тредов: ' . $this->threadsCount);
     }
 
     private function getCallable(): callable
