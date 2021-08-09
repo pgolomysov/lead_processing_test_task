@@ -3,6 +3,6 @@ services:
   webapp:
     build:
       context: .
-      dockerfile: ./Dockerfile/Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - ./app:/var/www/html

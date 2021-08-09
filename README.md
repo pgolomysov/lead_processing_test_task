@@ -35,7 +35,7 @@ lead_id | lead_category | current_datetime</li>
 
 <h1>Инструкции по сборке</h1>
 <code>
-    docker-compose build
+    docker build Dockerfile
 </code>
 <code>
 composer install
